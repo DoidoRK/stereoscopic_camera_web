@@ -1,13 +1,23 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>stereoscopic-camera-web</title>
-  </head>
-  <body>
-    <div id="app"></div>
-    <script type="module" src="/src/main.ts"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UDP Image Viewer</title>
+</head>
+<body class="bg-gray-900 text-white min-h-screen flex items-center justify-center">
+  <div class="grid grid-cols-2 gap-4 p-8 w-full max-w-5xl">
+    <div class="flex flex-col items-center">
+      <h2 class="mb-4 text-xl font-semibold">LEFT (UDP 8081)</h2>
+      <img id="leftImage" class="w-full rounded-lg shadow" />
+    </div>
+
+    <div class="flex flex-col items-center">
+      <h2 class="mb-4 text-xl font-semibold">RIGHT (UDP 8080)</h2>
+      <img id="rightImage" class="w-full rounded-lg shadow" />
+    </div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>
