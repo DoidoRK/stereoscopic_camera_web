@@ -1,8 +1,8 @@
-const WS_STATUS_PORT = 8082;
-const WS_CMD_PORT = 8083;
+const CAMERA_STREAM_PORT = 8765;
+const SYSTEM_STATUS_PORT = 8766;
 const SERVER_ADDRESS = "localhost"
 
-const webSocketCmdAddress = `ws://${SERVER_ADDRESS}:${WS_CMD_PORT}`
-const webSocketStatusAddress = `ws://${SERVER_ADDRESS}:${WS_STATUS_PORT}`
+const webSocketVideoStreamAddress = `ws://${SERVER_ADDRESS}:${CAMERA_STREAM_PORT}`
+const webSocketSystemStatusAddress = `ws://${SERVER_ADDRESS}:${SYSTEM_STATUS_PORT}`
 
-export { webSocketCmdAddress, webSocketStatusAddress };
+export { webSocketVideoStreamAddress, webSocketSystemStatusAddress };

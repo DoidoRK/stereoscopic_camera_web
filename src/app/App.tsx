@@ -1,13 +1,18 @@
 import { useState, useEffect } from 'react';
-import { Sidebar, ControlMode } from './components/Sidebar';
+import { Sidebar} from './components/Sidebar';
 import { CalibrationMode } from './components/modes/CalibrationMode';
 import { RoverControlMode } from './components/modes/RoverControlMode';
 import { DepthPointCloudMode } from './components/modes/DepthPointCloudMode';
 import { Power, Sun, Moon } from 'lucide-react';
+import useSystemSimulation from './useSystemSimulation';
 
 export default function App() {
-  const [currentMode, setCurrentMode] = useState<ControlMode>('control');
-  const [isDark, setIsDark] = useState(true);
+  const {
+    loading,
+    currentMode,
+    setCurrentMode
+  } = useSystemSimulation();
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     // Check system preference or localStorage
@@ -28,10 +33,10 @@ export default function App() {
 
   const renderMode = () => {
     switch (currentMode) {
-      case 'calibration':
-        return <CalibrationMode />;
       case 'control':
         return <RoverControlMode />;
+      case 'calibration':
+        return <CalibrationMode />;
       case 'depth':
         return <DepthPointCloudMode />;
       default:

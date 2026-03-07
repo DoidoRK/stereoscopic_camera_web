@@ -1,6 +1,5 @@
 import { Camera, Gamepad2, Box, LucideIcon } from 'lucide-react';
-
-export type ControlMode = 'calibration' | 'control' | 'depth';
+import { ControlMode } from '../../types';
 
 interface SidebarProps {
   currentMode: ControlMode;
@@ -50,16 +49,16 @@ function ModeButton({ icon: Icon, label, description, isActive, onClick }: ModeB
 export function Sidebar({ currentMode, onModeChange }: SidebarProps) {
   const modes: Array<{ id: ControlMode; icon: LucideIcon; label: string; description: string }> = [
     {
-      id: 'calibration',
-      icon: Camera,
-      label: 'Calibration Mode',
-      description: 'Calibrate stereoscopic camera alignment and parameters'
-    },
-    {
       id: 'control',
       icon: Gamepad2,
       label: 'Rover Control',
       description: 'Control robot movement with live camera feed'
+    },
+    {
+      id: 'calibration',
+      icon: Camera,
+      label: 'Calibration Mode',
+      description: 'Calibrate stereoscopic camera alignment and parameters'
     },
     {
       id: 'depth',
@@ -87,12 +86,6 @@ export function Sidebar({ currentMode, onModeChange }: SidebarProps) {
             onClick={() => onModeChange(mode.id)}
           />
         ))}
-      </div>
-
-      <div className="mt-6 pt-4 border-t border-sidebar-border">
-        <div className="text-xs text-muted-foreground text-center">
-          Robot Control Center v1.0
-        </div>
       </div>
     </div>
   );
