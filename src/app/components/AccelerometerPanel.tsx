@@ -1,14 +1,14 @@
-import { SensorReadings } from '../../types';
+import { AccelerometerData } from '../../types';
 
 interface AccelerometerPanelProps {
-  sensorReadings: SensorReadings;
+  accelerometerData: AccelerometerData;
 }
 
-export function AccelerometerPanel({ sensorReadings }: AccelerometerPanelProps) {
+export function AccelerometerPanel({ accelerometerData }: AccelerometerPanelProps) {
   const stats = [
-    {label: "Accelerometer X", value: sensorReadings.accelerometerXReading},
-    {label: "Accelerometer Y", value: sensorReadings.accelerometerYReading},
-    {label: "Accelerometer Z", value: sensorReadings.accelerometerZReading},
+    {label: "Accelerometer X", value: accelerometerData.accelerometerXReading},
+    {label: "Accelerometer Y", value: accelerometerData.accelerometerYReading},
+    {label: "Accelerometer Z", value: accelerometerData.accelerometerZReading},
   ];
 
   return (

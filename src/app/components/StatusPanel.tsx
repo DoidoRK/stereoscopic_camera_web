@@ -1,11 +1,11 @@
 import { Cpu, Wifi, Battery, Thermometer} from 'lucide-react';
-import { SystemParams } from '../../types';
+import { MiscellaneousData } from '../../types';
 
 interface StatusPanelProps {
-  systemParams: SystemParams;
+  miscellaneousData: MiscellaneousData;
 }
 
-export function StatusPanel({ systemParams }: StatusPanelProps) {
+export function StatusPanel({ miscellaneousData }: StatusPanelProps) {
   const stats = [
     { icon: Wifi, label: 'Signal', value: '95%', color: 'text-green-600 dark:text-green-500' },
     { icon: Battery, label: 'Battery', value: '78%', color: 'text-primary' },

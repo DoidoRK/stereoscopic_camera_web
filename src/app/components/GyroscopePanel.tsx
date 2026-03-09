@@ -1,14 +1,14 @@
-import { SensorReadings } from '../../types';
+import { GyroscopeData } from '../../types';
 
 interface GyroscopePanelProps {
-  sensorReadings: SensorReadings;
+  gyroscopeData: GyroscopeData;
 }
 
-export function GyroscopePanel({ sensorReadings }: GyroscopePanelProps) {
+export function GyroscopePanel({ gyroscopeData }: GyroscopePanelProps) {
   const stats = [
-    {label: "X Axis", value: sensorReadings.gyroscopeXReading},
-    {label: "Y Axis", value: sensorReadings.gyroscopeYReading},
-    {label: "Z Axis", value: sensorReadings.gyroscopeZReading},
+    {label: "X Axis", value: gyroscopeData.gyroscopeXReading},
+    {label: "Y Axis", value: gyroscopeData.gyroscopeYReading},
+    {label: "Z Axis", value: gyroscopeData.gyroscopeZReading},
   ];
 
   return (

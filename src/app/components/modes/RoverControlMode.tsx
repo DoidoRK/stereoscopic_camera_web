@@ -11,8 +11,7 @@ import useSystemSimulation from '../../useSystemSimulation';
 export function RoverControlMode() {
   const [activeKeys, setActiveKeys] = useState<Set<string>>(new Set());
   const {
-    systemParams,
-    sensorReadings
+    systemData
   } = useSystemSimulation();
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
@@ -128,10 +127,10 @@ export function RoverControlMode() {
       {/* Controls & Status - Below Camera */}
       <div className="grid grid-rows-2 gap-4">
         <div className="grid grid-cols-4 gap-4">
-          <StatusPanel systemParams={systemParams}/>
-          <EncodersPanel sensorReadings={sensorReadings}/>
-          <GyroscopePanel sensorReadings={sensorReadings}/>
-          <AccelerometerPanel sensorReadings={sensorReadings}/>
+          <StatusPanel miscellaneousData={systemData.miscellaneousData}/>
+          <EncodersPanel encodersData={systemData.encodersData}/>
+          <GyroscopePanel gyroscopeData={systemData.gyroscopeData}/>
+          <AccelerometerPanel accelerometerData={systemData.accelerometerData}/>
         </div>
           <ControlPanel activeKeys={activeKeys} />
       </div>

@@ -1,15 +1,15 @@
-import { SensorReadings } from '../../types';
+import { EncodersData } from '../../types';
 
 interface EncodersPanelProps {
-  sensorReadings: SensorReadings;
+  encodersData: EncodersData;
 }
 
-export function EncodersPanel({ sensorReadings }: EncodersPanelProps) {
+export function EncodersPanel({ encodersData }: EncodersPanelProps) {
   const stats = [
-    { label: 'Front Right Motor', value: sensorReadings.frontRightMotorEncoderReading},
-    { label: 'Front Left Motor', value: sensorReadings.frontLeftMotorEncoderReading},
-    { label: 'Rear Right Motor', value: sensorReadings.rearRightMotorEncoderReading},
-    { label: 'Rear Left Motor', value: sensorReadings.rearLeftMotorEncoderReading},
+    { label: 'Front Right Motor', value: encodersData.frontRightMotorEncoderReading},
+    { label: 'Front Left Motor', value: encodersData.frontLeftMotorEncoderReading},
+    { label: 'Rear Right Motor', value: encodersData.rearRightMotorEncoderReading},
+    { label: 'Rear Left Motor', value: encodersData.rearLeftMotorEncoderReading},
   ];
 
   return (

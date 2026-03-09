@@ -1,10 +1,4 @@
-enum MessageOp {
-    SYSTEM_STARTUP,
-    SYSTEM_PARAM_CHANGE,
-    SYSTEM_SHUTDOWN
-}
-
-type SystemParams = {
+type MiscellaneousData = {
     broadcasting: boolean;
     calibrating: boolean;
     rightCameraConnected: boolean;
@@ -15,19 +9,31 @@ type SystemParams = {
 
 type StereoCalibrationParams = {}
 
-type SensorReadings = {
-    frontRightMotorEncoderReading: number;
-    frontLeftMotorEncoderReading: number;
-    rearRightMotorEncoderReading: number;
-    rearLeftMotorEncoderReading: number;
+type AccelerometerData = {
     accelerometerXReading: number;
     accelerometerYReading: number;
     accelerometerZReading: number;
+}
+
+type GyroscopeData = {
     gyroscopeXReading: number;
     gyroscopeYReading: number;
     gyroscopeZReading: number;
 }
 
+type EncodersData = {
+    frontRightMotorEncoderReading: number;
+    frontLeftMotorEncoderReading: number;
+    rearRightMotorEncoderReading: number;
+    rearLeftMotorEncoderReading: number;
+}
+
+type SystemData = {
+    miscellaneousData: MiscellaneousData;
+    accelerometerData: AccelerometerData;
+    gyroscopeData: GyroscopeData;
+    encodersData: EncodersData;
+}
+
 export type ControlMode = 'calibration' | 'control' | 'depth';
-export { MessageOp };
-export type { SystemParams, SensorReadings, StereoCalibrationParams };
+export type { MiscellaneousData, AccelerometerData, GyroscopeData, EncodersData, StereoCalibrationParams, SystemData };

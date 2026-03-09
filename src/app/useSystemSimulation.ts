@@ -1,34 +1,39 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { MessageOp, SystemParams, SensorReadings, ControlMode } from '../types';
+import { useState, useEffect, useRef } from 'react';
+import { ControlMode, SystemData } from '../types';
 import { webSocketVideoStreamAddress, webSocketSystemStatusAddress } from '../config';
-import { jsonToSensorReadings, jsonToSystemParams } from '../utils';
+import { jsonToSystemData } from '../utils';
 
 const useSystemSimulation = () => {
-    const systemParametersInitialState: SystemParams = {
-        broadcasting: false,
-        calibrating: false,
-        rightCameraConnected: false,
-        leftCameraConnected: false,
-        rightCameraFPS: 0,
-        leftCameraFPS: 0,
-    };
-    
-    const sensorReadingsInitialState: SensorReadings = {
-        frontRightMotorEncoderReading: 0,
-        frontLeftMotorEncoderReading: 0,
-        rearRightMotorEncoderReading: 0,
-        rearLeftMotorEncoderReading: 0,
-        accelerometerXReading: 0,
-        accelerometerYReading: 0,
-        accelerometerZReading: 0,
-        gyroscopeXReading: 0,
-        gyroscopeYReading: 0,
-        gyroscopeZReading: 0,
-    };
+    const systemDataInitialState: SystemData = {
+        miscellaneousData: {
+            broadcasting: false,
+            calibrating: false,
+            rightCameraConnected: false,
+            leftCameraConnected: false,
+            rightCameraFPS: 0,
+            leftCameraFPS: 0,
+        },
+        encodersData:{
+            frontRightMotorEncoderReading: 0,
+            frontLeftMotorEncoderReading: 0,
+            rearRightMotorEncoderReading: 0,
+            rearLeftMotorEncoderReading: 0,
+        },
+        accelerometerData:{
+            accelerometerXReading: 0,
+            accelerometerYReading: 0,
+            accelerometerZReading: 0,
+        },
+        gyroscopeData:{
+            gyroscopeXReading: 0,
+            gyroscopeYReading: 0,
+            gyroscopeZReading: 0,
+
+        }
+    }
 
     //Data from websockets
-    const [systemParams, setSystemParams] = useState<SystemParams>(systemParametersInitialState);
-    const [sensorReadings, setSensorReadings] = useState<SensorReadings>(sensorReadingsInitialState);
+    const [ systemData, setSystemData ] = useState<SystemData>(systemDataInitialState);
     const [videoStreamSocketConnected, setVideoStreamSocketConnected] = useState(false);
     const videoStreamSocketRef = useRef<WebSocket | null>(null);
     const [systemStatusSocketConnected, setSystemStatusSocketConnected] = useState(false);
@@ -98,16 +103,14 @@ const useSystemSimulation = () => {
             };
     
             statusSocket.onmessage = (message) => {
-                setSystemParams(jsonToSystemParams(JSON.parse(message.data)));
-                // setSensorReadings(jsonToSensorReadings(JSON.parse(message.data)));
+                setSystemData(jsonToSystemData(JSON.parse(message.data)));
             };
         }
     }, []);
 
     return { 
         loading,
-        systemParams,
-        sensorReadings,
+        systemData,
         currentMode,
         videoStreamSocketConnected,
         systemStatusSocketConnected,
