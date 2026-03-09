@@ -5,6 +5,7 @@ import { jsonToSystemData } from '../utils';
 
 const useSystemSimulation = () => {
     const systemDataInitialState: SystemData = {
+        controlMode: 0,
         miscellaneousData: {
             broadcasting: false,
             calibrating: false,
@@ -28,12 +29,11 @@ const useSystemSimulation = () => {
             gyroscopeXReading: 0,
             gyroscopeYReading: 0,
             gyroscopeZReading: 0,
-
         }
     }
 
     //Data from websockets
-    const [ systemData, setSystemData ] = useState<SystemData>(systemDataInitialState);
+    const [systemData, setSystemData] = useState<SystemData>(systemDataInitialState);
     const [videoStreamSocketConnected, setVideoStreamSocketConnected] = useState(false);
     const videoStreamSocketRef = useRef<WebSocket | null>(null);
     const [systemStatusSocketConnected, setSystemStatusSocketConnected] = useState(false);

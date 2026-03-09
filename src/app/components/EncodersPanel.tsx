@@ -6,10 +6,10 @@ interface EncodersPanelProps {
 
 export function EncodersPanel({ encodersData }: EncodersPanelProps) {
   const stats = [
-    { label: 'Front Right Motor', value: encodersData.frontRightMotorEncoderReading},
     { label: 'Front Left Motor', value: encodersData.frontLeftMotorEncoderReading},
-    { label: 'Rear Right Motor', value: encodersData.rearRightMotorEncoderReading},
+    { label: 'Front Right Motor', value: encodersData.frontRightMotorEncoderReading},
     { label: 'Rear Left Motor', value: encodersData.rearLeftMotorEncoderReading},
+    { label: 'Rear Right Motor', value: encodersData.rearRightMotorEncoderReading},
   ];
 
   return (

@@ -1,4 +1,4 @@
-import { MiscellaneousData, AccelerometerData, EncodersData, GyroscopeData, SystemData } from './types';
+import { MiscellaneousData, AccelerometerData, EncodersData, GyroscopeData, SystemData, ControlMode } from './types';
 
 const jsonToMiscellaneousData = (json: any): MiscellaneousData => {
     return {
@@ -38,6 +38,7 @@ const jsonToEncodersData = (json: any): EncodersData => {
 
 const jsonToSystemData = (json: any): SystemData => {
     return {
+        controlMode: json.ControlMode,
         miscellaneousData: jsonToMiscellaneousData(json.miscellaneousData),
         accelerometerData: jsonToAccelerometerData(json.accelerometerData),
         gyroscopeData: jsonToGyroscopeData(json.gyroscopeData),

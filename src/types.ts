@@ -7,7 +7,12 @@ type MiscellaneousData = {
     leftCameraFPS: number;
 }
 
-type StereoCalibrationParams = {}
+type StereoCalibrationParams = {
+    Baseline: number;
+    focalLength: number;
+    alignmentError: number;
+    disparityRange: number;
+}
 
 type AccelerometerData = {
     accelerometerXReading: number;
@@ -29,6 +34,7 @@ type EncodersData = {
 }
 
 type SystemData = {
+    controlMode: number;
     miscellaneousData: MiscellaneousData;
     accelerometerData: AccelerometerData;
     gyroscopeData: GyroscopeData;
