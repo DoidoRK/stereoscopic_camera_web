@@ -47,7 +47,7 @@ export function CalibrationMode() {
         {/* Right Camera */}
         <div className="space-y-2">
           <h3 className="font-medium text-sm">Right Camera</h3>
-          <div className="relative bg-secondary rounded-lg overflow-hidden aspect-video border-2 border-green-500">
+          <div className="relative bg-secondary rounded-lg overflow-hidden aspect-video border-2 border-primary">
             <div className="absolute inset-0 bg-gradient-to-br from-muted to-secondary" />
 
             {/* Camera label */}

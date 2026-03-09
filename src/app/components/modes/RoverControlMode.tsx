@@ -1,19 +1,26 @@
 import { useState, useEffect, useCallback } from 'react';
 import { ControlPanel } from '../ControlPanel';
 import { StatusPanel } from '../StatusPanel';
+import { EncodersPanel } from '../EncodersPanel';
+import { AccelerometerPanel } from '../AccelerometerPanel';
+import { GyroscopePanel } from '../GyroscopePanel';
+
 import { AlertCircle, Video } from 'lucide-react';
+import useSystemSimulation from '../../useSystemSimulation';
 
 export function RoverControlMode() {
   const [activeKeys, setActiveKeys] = useState<Set<string>>(new Set());
-  const [speed, setSpeed] = useState(50);
-  const [isConnected, setIsConnected] = useState(true);
+  const {
+    systemParams,
+    sensorReadings
+  } = useSystemSimulation();
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     const key = e.key.toLowerCase();
     if (['w', 'a', 's', 'd'].includes(key)) {
       e.preventDefault();
       setActiveKeys(prev => new Set(prev).add(key));
-      sendRobotCommand(key, 'press');
+      // sendRobotCommand(key, 'press');
     }
   }, []);
 
@@ -26,7 +33,7 @@ export function RoverControlMode() {
         newSet.delete(key);
         return newSet;
       });
-      sendRobotCommand(key, 'release');
+      // sendRobotCommand(key, 'release');
     }
   }, []);
 
@@ -40,19 +47,19 @@ export function RoverControlMode() {
     };
   }, [handleKeyDown, handleKeyUp]);
 
-  const sendRobotCommand = (key: string, action: 'press' | 'release') => {
-    const commands: Record<string, string> = {
-      'w': 'forward',
-      's': 'backward',
-      'a': 'left',
-      'd': 'right'
-    };
+  // const sendRobotCommand = (key: string, action: 'press' | 'release') => {
+  //   const commands: Record<string, string> = {
+  //     'w': 'forward',
+  //     's': 'backward',
+  //     'a': 'left',
+  //     'd': 'right'
+  //   };
     
-    console.log(`Robot command: ${commands[key]} - ${action}`, {
-      speed: speed,
-      timestamp: new Date().toISOString()
-    });
-  };
+  //   console.log(`Robot command: ${commands[key]} - ${action}`, {
+  //     speed: speed,
+  //     timestamp: new Date().toISOString()
+  //   });
+  // };
 
   return (
     <div className="flex-1 p-6">
@@ -63,25 +70,11 @@ export function RoverControlMode() {
         </p>
       </div>
 
-      {/* Alert Banner */}
-      <div className="bg-primary/10 border border-primary/30 rounded-lg p-3 mb-6 flex items-center gap-3">
-        <AlertCircle className="w-5 h-5 text-primary" />
-        <p className="text-sm text-foreground">
-          Use <kbd className="px-1.5 py-0.5 bg-muted rounded text-xs mx-1">W</kbd>
-          <kbd className="px-1.5 py-0.5 bg-muted rounded text-xs mx-1">A</kbd>
-          <kbd className="px-1.5 py-0.5 bg-muted rounded text-xs mx-1">S</kbd>
-          <kbd className="px-1.5 py-0.5 bg-muted rounded text-xs mx-1">D</kbd>
-          keys to control the robot.
-        </p>
-      </div>
-
       {/* Stereo Camera Feed - Full Width */}
       <div className="bg-card rounded-lg p-6 border border-border mb-6">
         <div className="flex items-center justify-between mb-4">
           <h3 className="font-medium text-lg">Stereoscopic Camera View</h3>
           <div className="flex items-center gap-2 text-green-600 dark:text-green-500 text-sm">
-            <div className="w-2 h-2 bg-green-600 dark:bg-green-500 rounded-full animate-pulse" />
-            <span>Live</span>
           </div>
         </div>
         
@@ -111,7 +104,7 @@ export function RoverControlMode() {
           {/* Right Camera */}
           <div className="space-y-2">
             <div className="text-sm text-muted-foreground font-medium">Right Camera</div>
-            <div className="relative bg-secondary rounded-lg overflow-hidden aspect-video flex items-center justify-center border-2 border-green-600/50 dark:border-green-500/50">
+            <div className="relative bg-secondary rounded-lg overflow-hidden aspect-video flex items-center justify-center border-2 border-primary/50">
               <div className="absolute inset-0 bg-gradient-to-br from-muted to-secondary" />
               <div className="absolute inset-0 opacity-20" style={{
                 backgroundImage: 'linear-gradient(currentColor 1px, transparent 1px), linear-gradient(90deg, currentColor 1px, transparent 1px)',
@@ -133,39 +126,14 @@ export function RoverControlMode() {
       </div>
 
       {/* Controls & Status - Below Camera */}
-      <div className="grid grid-cols-4 gap-4">
-        <StatusPanel isConnected={isConnected} />
-        <ControlPanel activeKeys={activeKeys} speed={speed} />
-        
-        {/* Speed Control */}
-        <div className="bg-card rounded-lg p-4 border border-border">
-          <h3 className="font-medium mb-3">Speed Adjustment</h3>
-          <input
-            type="range"
-            min="0"
-            max="100"
-            value={speed}
-            onChange={(e) => setSpeed(Number(e.target.value))}
-            className="w-full accent-primary"
-          />
-          <div className="flex justify-between text-xs text-muted-foreground mt-1">
-            <span>Stop</span>
-            <span>Max</span>
-          </div>
+      <div className="grid grid-rows-2 gap-4">
+        <div className="grid grid-cols-4 gap-4">
+          <StatusPanel systemParams={systemParams}/>
+          <EncodersPanel sensorReadings={sensorReadings}/>
+          <GyroscopePanel sensorReadings={sensorReadings}/>
+          <AccelerometerPanel sensorReadings={sensorReadings}/>
         </div>
-
-        {/* Emergency Stop */}
-        <div className="bg-card rounded-lg p-4 border border-border flex items-center">
-          <button 
-            className="w-full bg-destructive hover:bg-destructive/90 active:bg-destructive/80 text-destructive-foreground font-semibold py-3 px-4 rounded-lg transition-colors"
-            onClick={() => {
-              setActiveKeys(new Set());
-              console.log('Emergency stop activated!');
-            }}
-          >
-            EMERGENCY STOP
-          </button>
-        </div>
+          <ControlPanel activeKeys={activeKeys} />
       </div>
     </div>
   );

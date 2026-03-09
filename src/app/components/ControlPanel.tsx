@@ -2,10 +2,9 @@ import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Circle } from 'lucide-react'
 
 interface ControlPanelProps {
   activeKeys: Set<string>;
-  speed: number;
 }
 
-export function ControlPanel({ activeKeys, speed }: ControlPanelProps) {
+export function ControlPanel({ activeKeys }: ControlPanelProps) {
   const KeyButton = ({ keyName, direction, icon: Icon }: { keyName: string; direction: string; icon: any }) => {
     const isActive = activeKeys.has(keyName.toLowerCase());
     
@@ -37,25 +36,6 @@ export function ControlPanel({ activeKeys, speed }: ControlPanelProps) {
           <KeyButton keyName="A" direction="left" icon={ArrowLeft} />
           <KeyButton keyName="S" direction="backward" icon={ArrowDown} />
           <KeyButton keyName="D" direction="right" icon={ArrowRight} />
-        </div>
-      </div>
-
-      <div className="space-y-3 pt-4 border-t border-border">
-        <div className="flex justify-between items-center">
-          <span className="text-sm text-muted-foreground">Speed</span>
-          <span className="text-sm font-mono text-foreground">{speed}%</span>
-        </div>
-        
-        <div className="w-full bg-secondary rounded-full h-2 overflow-hidden">
-          <div 
-            className="bg-primary h-full transition-all duration-300"
-            style={{ width: `${speed}%` }}
-          />
-        </div>
-
-        <div className="flex items-center gap-2 text-xs text-muted-foreground">
-          <Circle className="w-3 h-3" />
-          <span>Use WASD keys to control robot</span>
         </div>
       </div>
     </div>

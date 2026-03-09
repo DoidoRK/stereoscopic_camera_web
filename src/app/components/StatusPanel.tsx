@@ -1,10 +1,11 @@
-import { Cpu, Wifi, Battery, Thermometer } from 'lucide-react';
+import { Cpu, Wifi, Battery, Thermometer} from 'lucide-react';
+import { SystemParams } from '../../types';
 
 interface StatusPanelProps {
-  isConnected: boolean;
+  systemParams: SystemParams;
 }
 
-export function StatusPanel({ isConnected }: StatusPanelProps) {
+export function StatusPanel({ systemParams }: StatusPanelProps) {
   const stats = [
     { icon: Wifi, label: 'Signal', value: '95%', color: 'text-green-600 dark:text-green-500' },
     { icon: Battery, label: 'Battery', value: '78%', color: 'text-primary' },
@@ -15,14 +16,7 @@ export function StatusPanel({ isConnected }: StatusPanelProps) {
   return (
     <div className="bg-card rounded-lg p-4 border border-border">
       <div className="flex items-center justify-between mb-4">
-        <h3 className="font-medium">Robot Status</h3>
-        <div className={`
-          flex items-center gap-2 text-xs px-2 py-1 rounded-full
-          ${isConnected ? 'bg-green-600/20 dark:bg-green-500/20 text-green-600 dark:text-green-500' : 'bg-red-600/20 dark:bg-red-500/20 text-red-600 dark:text-red-500'}
-        `}>
-          <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-600 dark:bg-green-500 animate-pulse' : 'bg-red-600 dark:bg-red-500'}`} />
-          {isConnected ? 'Connected' : 'Disconnected'}
-        </div>
+        <h3 className="font-medium">System Status</h3>
       </div>
 
       <div className="grid grid-cols-2 gap-3">

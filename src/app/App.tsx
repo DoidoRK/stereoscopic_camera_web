@@ -12,7 +12,7 @@ export default function App() {
     currentMode,
     setCurrentMode
   } = useSystemSimulation();
-  const [isDark, setIsDark] = useState(false);
+  const [isDark, setIsDark] = useState(true);
 
   useEffect(() => {
     // Check system preference or localStorage
