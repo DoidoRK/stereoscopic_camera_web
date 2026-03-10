@@ -3,8 +3,9 @@ import { Sidebar } from "./components/Sidebar";
 import { CalibrationMode } from "./components/modes/CalibrationMode";
 import { RoverControlMode } from "./components/modes/RoverControlMode";
 import { DepthPointCloudMode } from "./components/modes/DepthPointCloudMode";
+import { ConnectionStatus } from "./components/ConnectionStatus";
 
-import { Power, Sun, Moon } from "lucide-react";
+import { Power, Sun, Moon, LoaderCircle } from "lucide-react";
 
 import { SystemProvider, useSystem } from "./context/SystemProvider";
 
@@ -12,10 +13,11 @@ function AppContent() {
   const {
     loading,
     currentMode,
-    setCurrentMode
+    setCurrentMode,
+    videoStreamSocketConnected,
+    controlSocketConnected
   } = useSystem();
   const [isDark, setIsDark] = useState(true);
-  const [connectionStaus, setConnectionStatus] = useState(0);
 
   useEffect(() => {
     const savedTheme = localStorage.getItem("theme");
@@ -46,20 +48,12 @@ function AppContent() {
   };
 
   if (loading) {
-    
     return (
-      <div className="flex flex-col items-center justify-center h-screen gap-6">
-        {/* Spinner */}
-        <div className="relative w-16 h-16">
-          <div className="absolute inset-0 rounded-full border-4 border-muted"></div>
-          <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
-        </div>
-        {/* Text */}
-        <div className="text-center">
-          <p className="text-sm text-muted-foreground">
-            Establishing telemetry and video streams...
-          </p>
-        </div>
+      <div className="flex flex-col items-center justify-center h-screen gap-12">
+        <ConnectionStatus
+          controlConnected={controlSocketConnected}
+          videoConnected={videoStreamSocketConnected}
+        />
       </div>
     );
   }

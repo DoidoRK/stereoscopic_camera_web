@@ -47,8 +47,7 @@ type SystemContextType = {
   currentMode: ControlMode
   setCurrentMode: (mode: ControlMode) => void
   videoStreamSocketConnected: boolean
-  systemStatusSocketConnected: boolean
-  commandSocketConnected: boolean
+  controlSocketConnected: boolean
   leftCanvasRef: React.RefObject<HTMLCanvasElement | null>
   rightCanvasRef: React.RefObject<HTMLCanvasElement | null>
   sendCommand: (command: string, value?: any) => void

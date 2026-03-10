@@ -2,8 +2,7 @@ import { createContext, useContext, ReactNode, useMemo } from "react";
 import { SystemData, ControlMode, SystemContextType } from "../../types";
 
 import useVideoStream from "../hooks/useVideoStream";
-import useSystemStatus from "../hooks/useSystemStatus";
-import useRobotControl from "../hooks/useRobotControl";
+import useControlSocket from "../hooks/useControlSocket";
 
 const SystemContext = createContext<SystemContextType | null>(null);
 
@@ -47,32 +46,24 @@ export function SystemProvider({ children }: { children: ReactNode }) {
   } = useVideoStream();
 
   /*
-  TELEMETRY
+  CONTROL & TELEMETRY (unified socket)
   */
   const {
     systemData,
-    statusConnected
-  } = useSystemStatus(initialSystemState);
-
-  /*
-  CONTROL
-  */
-  const {
+    connected: controlConnected,
     currentMode,
     setCurrentMode,
-    sendCommand,
-    commandConnected
-  } = useRobotControl();
+    sendCommand
+  } = useControlSocket(initialSystemState);
 
-  const loading = !(videoConnected && statusConnected);
+  const loading = !(videoConnected && controlConnected);
   const value = useMemo(() => ({
     loading,
     systemData,
     currentMode,
     setCurrentMode,
+    controlSocketConnected: controlConnected,
     videoStreamSocketConnected: videoConnected,
-    systemStatusSocketConnected: statusConnected,
-    commandSocketConnected: commandConnected,
     leftCanvasRef,
     rightCanvasRef,
     sendCommand
@@ -81,8 +72,7 @@ export function SystemProvider({ children }: { children: ReactNode }) {
     systemData,
     currentMode,
     videoConnected,
-    statusConnected,
-    commandConnected
+    controlConnected
   ]);
 
   return (
