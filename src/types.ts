@@ -41,5 +41,18 @@ type SystemData = {
     encodersData: EncodersData;
 }
 
+type SystemContextType = {
+  loading: boolean
+  systemData: SystemData
+  currentMode: ControlMode
+  setCurrentMode: (mode: ControlMode) => void
+  videoStreamSocketConnected: boolean
+  systemStatusSocketConnected: boolean
+  commandSocketConnected: boolean
+  leftCanvasRef: React.RefObject<HTMLCanvasElement | null>
+  rightCanvasRef: React.RefObject<HTMLCanvasElement | null>
+  sendCommand: (command: string, value?: any) => void
+}
+
 export type ControlMode = 'calibration' | 'control' | 'depth';
-export type { MiscellaneousData, AccelerometerData, GyroscopeData, EncodersData, StereoCalibrationParams, SystemData };
+export type { MiscellaneousData, AccelerometerData, GyroscopeData, EncodersData, StereoCalibrationParams, SystemData, SystemContextType };

@@ -4,19 +4,13 @@ import { jsonToSystemData } from "../../utils";
 import { SystemData } from "../../types";
 
 export default function useSystemStatus(initialState: SystemData) {
-
   const storeRef = useRef<SystemData>(initialState);
-
   const [systemData, setSystemData] = useState<SystemData>(initialState);
-
   const socketRef = useRef<WebSocket | null>(null);
-
   const [statusConnected, setStatusConnected] = useState(false);
 
   useEffect(() => {
-
     const socket = new WebSocket(webSocketSystemStatusAddress);
-
     socketRef.current = socket;
 
     socket.onopen = () => {
@@ -35,19 +29,12 @@ export default function useSystemStatus(initialState: SystemData) {
     };
 
     socket.onmessage = (message) => {
-
       try {
-
         const parsed = JSON.parse(message.data);
-
         storeRef.current = jsonToSystemData(parsed);
-
       } catch (err) {
-
         console.error("Invalid status message", err);
-
       }
-
     };
 
     return () => socket.close();
@@ -55,15 +42,10 @@ export default function useSystemStatus(initialState: SystemData) {
   }, []);
 
   useEffect(() => {
-
     const interval = setInterval(() => {
-
       setSystemData({ ...storeRef.current });
-
     }, 100); // 10Hz UI update
-
     return () => clearInterval(interval);
-
   }, []);
 
   return {

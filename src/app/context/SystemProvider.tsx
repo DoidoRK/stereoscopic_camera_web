@@ -1,30 +1,9 @@
 import { createContext, useContext, ReactNode, useMemo } from "react";
-import { SystemData, ControlMode } from "../../types";
+import { SystemData, ControlMode, SystemContextType } from "../../types";
 
 import useVideoStream from "../hooks/useVideoStream";
 import useSystemStatus from "../hooks/useSystemStatus";
 import useRobotControl from "../hooks/useRobotControl";
-
-type SystemContextType = {
-
-  loading: boolean
-
-  systemData: SystemData
-
-  currentMode: ControlMode
-  setCurrentMode: (mode: ControlMode) => void
-
-  videoStreamSocketConnected: boolean
-  systemStatusSocketConnected: boolean
-  commandSocketConnected: boolean
-
-  
-
-  leftCanvasRef: React.RefObject<HTMLCanvasElement | null>
-  rightCanvasRef: React.RefObject<HTMLCanvasElement | null>
-
-  sendCommand: (command: string, value?: any) => void
-}
 
 const SystemContext = createContext<SystemContextType | null>(null);
 
@@ -85,22 +64,17 @@ export function SystemProvider({ children }: { children: ReactNode }) {
     commandConnected
   } = useRobotControl();
 
-  const loading = !(videoConnected || statusConnected);
-
+  const loading = !(videoConnected && statusConnected);
   const value = useMemo(() => ({
     loading,
     systemData,
-
     currentMode,
     setCurrentMode,
-
     videoStreamSocketConnected: videoConnected,
     systemStatusSocketConnected: statusConnected,
     commandSocketConnected: commandConnected,
-
     leftCanvasRef,
     rightCanvasRef,
-
     sendCommand
   }), [
     loading,
@@ -119,12 +93,9 @@ export function SystemProvider({ children }: { children: ReactNode }) {
 }
 
 export function useSystem() {
-
   const context = useContext(SystemContext);
-
   if (!context) {
     throw new Error("useSystem must be used inside SystemProvider");
   }
-
   return context;
 }

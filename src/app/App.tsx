@@ -9,89 +9,76 @@ import { Power, Sun, Moon } from "lucide-react";
 import { SystemProvider, useSystem } from "./context/SystemProvider";
 
 function AppContent() {
-
   const {
     loading,
     currentMode,
     setCurrentMode
   } = useSystem();
-
   const [isDark, setIsDark] = useState(true);
+  const [connectionStaus, setConnectionStatus] = useState(0);
 
   useEffect(() => {
-
     const savedTheme = localStorage.getItem("theme");
-
     const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-
     const shouldBeDark = savedTheme === "dark" || (!savedTheme && prefersDark);
-
     setIsDark(shouldBeDark);
-
     document.documentElement.classList.toggle("dark", shouldBeDark);
-
   }, []);
 
   const toggleTheme = () => {
-
     const newIsDark = !isDark;
-
     setIsDark(newIsDark);
-
     document.documentElement.classList.toggle("dark", newIsDark);
-
     localStorage.setItem("theme", newIsDark ? "dark" : "light");
-
   };
 
   const renderMode = () => {
-
     switch (currentMode) {
-
       case "control":
         return <RoverControlMode />;
-
       case "calibration":
         return <CalibrationMode />;
-
       case "depth":
         return <DepthPointCloudMode />;
-
       default:
         return <RoverControlMode />;
     }
-
   };
 
   if (loading) {
+    
     return (
-      <div className="flex items-center justify-center h-screen">
-        <p className="text-muted-foreground">Connecting to robot...</p>
+      <div className="flex flex-col items-center justify-center h-screen gap-6">
+        {/* Spinner */}
+        <div className="relative w-16 h-16">
+          <div className="absolute inset-0 rounded-full border-4 border-muted"></div>
+          <div className="absolute inset-0 rounded-full border-4 border-primary border-t-transparent animate-spin"></div>
+        </div>
+        {/* Text */}
+        <div className="text-center">
+          <p className="text-sm text-muted-foreground">
+            Establishing telemetry and video streams...
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background text-foreground flex flex-col">
-
       {/* Header */}
       <header className="bg-card border-b border-border px-6 py-4">
-
         <div className="flex items-center justify-between">
-
           <div className="flex items-center gap-3">
-
             <div className="w-10 h-10 bg-primary rounded-lg flex items-center justify-center">
               <Power className="w-6 h-6 text-primary-foreground" />
             </div>
-
             <div>
               <h1 className="text-xl font-bold">Robot Control Center</h1>
               <p className="text-xs text-muted-foreground">
                 Stereoscopic Vision System
               </p>
             </div>
-
           </div>
 
           <button
@@ -105,37 +92,25 @@ function AppContent() {
               <Moon className="w-6 h-6" />
             )}
           </button>
-
         </div>
-
       </header>
 
       {/* Main Layout */}
       <div className="flex flex-1 overflow-hidden">
-
         <Sidebar
           currentMode={currentMode}
           onModeChange={setCurrentMode}
         />
-
         {renderMode()}
-
       </div>
-
     </div>
   );
 }
 
 export default function App() {
-
   return (
-
     <SystemProvider>
-
       <AppContent />
-
     </SystemProvider>
-
   );
-
 }
