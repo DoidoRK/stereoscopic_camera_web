@@ -33,7 +33,7 @@ export function SystemProvider({ children }: { children: ReactNode }) {
       gyroscopeXReading:0,
       gyroscopeYReading:0,
       gyroscopeZReading:0
-    }
+    },
   };
 
   /*

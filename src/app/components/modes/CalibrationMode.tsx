@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { Crosshair, Grid3x3, Maximize2, RefreshCw } from 'lucide-react';
+import { useSystem } from "../../context/SystemProvider";
+import { CameraFeed } from '../ui/CameraFeed';
 
 export function CalibrationMode() {
-  const [showGrid, setShowGrid] = useState(true);
-  const [showCrosshair, setShowCrosshair] = useState(true);
+  const {
+    systemData,
+    leftCanvasRef,
+    rightCanvasRef,
+  } = useSystem();
 
   const calibrationParams = [
     { label: 'Baseline', value: '120mm', adjustable: true },
@@ -29,66 +34,25 @@ export function CalibrationMode() {
 
       {/* Stereo Camera Feed */}
       <div className="grid grid-cols-2 gap-4">
-        {/* Left Camera */}
-        <div className="space-y-2">
-          <h3 className="font-medium text-sm">Left Camera</h3>
-          <div className="relative bg-secondary rounded-lg overflow-hidden aspect-video border-2 border-primary">
-            <div className="absolute inset-0 bg-gradient-to-br from-muted to-secondary" />
-            
-
-            {/* Camera label */}
-            <div className="absolute top-2 left-2 bg-black/70 px-2 py-1 rounded text-xs text-white font-mono">
-              LEFT CAM
-            </div>
-            
-          </div>
-        </div>
+        {/* LEFT CAMERA */}
+        <CameraFeed
+          CanvasRef={leftCanvasRef}
+          cameraConnected={systemData.miscellaneousData.leftCameraConnected}
+          cameraFPS={systemData.miscellaneousData.leftCameraFPS}
+        />
 
         {/* Right Camera */}
-        <div className="space-y-2">
-          <h3 className="font-medium text-sm">Right Camera</h3>
-          <div className="relative bg-secondary rounded-lg overflow-hidden aspect-video border-2 border-primary">
-            <div className="absolute inset-0 bg-gradient-to-br from-muted to-secondary" />
-
-            {/* Camera label */}
-            <div className="absolute top-2 left-2 bg-black/70 px-2 py-1 rounded text-xs text-white font-mono">
-              RIGHT CAM
-            </div>
-            
-          </div>
-        </div>
+        <CameraFeed
+          CanvasRef={rightCanvasRef}
+          cameraConnected={systemData.miscellaneousData.rightCameraConnected}
+          cameraFPS={systemData.miscellaneousData.rightCameraFPS}
+        />
       </div>
 
       {/* Controls and Parameters */}
       <div className="grid grid-cols-2 gap-4">
         {/* Calibration Tools */}
         <div className="bg-card rounded-lg p-4 border border-border">
-          <h3 className="font-medium mb-4">Calibration Tools</h3>
-          
-          <div className="space-y-3">
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={showGrid}
-                onChange={(e) => setShowGrid(e.target.checked)}
-                className="w-4 h-4 accent-primary"
-              />
-              <Grid3x3 className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">Show Grid Overlay</span>
-            </label>
-
-            <label className="flex items-center gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                checked={showCrosshair}
-                onChange={(e) => setShowCrosshair(e.target.checked)}
-                className="w-4 h-4 accent-primary"
-              />
-              <Crosshair className="w-4 h-4 text-muted-foreground" />
-              <span className="text-sm">Show Crosshair</span>
-            </label>
-          </div>
-
           <div className="mt-4 pt-4 border-t border-border">
             <div className="text-sm text-muted-foreground mb-2">Calibration Progress</div>
             <div className="w-full bg-secondary rounded-full h-2">
@@ -101,7 +65,6 @@ export function CalibrationMode() {
         {/* Camera Parameters */}
         <div className="bg-card rounded-lg p-4 border border-border">
           <h3 className="font-medium mb-4">Camera Parameters</h3>
-          
           <div className="space-y-3">
             {calibrationParams.map((param) => (
               <div key={param.label} className="flex items-center justify-between">
