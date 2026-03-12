@@ -62,12 +62,16 @@ export function RoverControlMode() {
             CanvasRef={leftCanvasRef}
             cameraConnected={systemData.miscellaneousData.leftCameraConnected}
             cameraFPS={systemData.miscellaneousData.leftCameraFPS}
+            cameraTitle="Left Camera"
+            disconnectedMessage="Waiting for left camera to connect"
           />
           {/* RIGHT CAMERA */}
           <CameraFeed
             CanvasRef={rightCanvasRef}
             cameraConnected={systemData.miscellaneousData.rightCameraConnected}
             cameraFPS={systemData.miscellaneousData.rightCameraFPS}
+            cameraTitle="Right Camera"
+            disconnectedMessage="Waiting for right camera to connect"
           />
         </div>
       </div>

@@ -5,9 +5,11 @@ interface CameraFeedProps {
   CanvasRef: RefObject<HTMLCanvasElement | null>
   cameraConnected: boolean;
   cameraFPS: number;
+  disconnectedMessage: string;
+  cameraTitle: string;
 }
 
-export function CameraFeed({ CanvasRef, cameraConnected, cameraFPS }: CameraFeedProps) {
+export function CameraFeed({ CanvasRef, cameraConnected, cameraFPS, disconnectedMessage, cameraTitle }: CameraFeedProps) {
     return (
         <div className="space-y-2">
             <div className="relative bg-secondary rounded-lg overflow-hidden aspect-video border-2 border-primary/50">
@@ -31,11 +33,11 @@ export function CameraFeed({ CanvasRef, cameraConnected, cameraFPS }: CameraFeed
               />
               {!cameraConnected && (
                 <div className="absolute inset-0 flex items-center justify-center text-xs text-white font-mono">
-                  Waiting for right camera to connect
+                  {disconnectedMessage}
                 </div>
               )}
               <div className="absolute top-2 left-2 bg-black/70 px-2 py-1 rounded text-xs text-white font-mono">
-                RIGHT
+                {cameraTitle}
               </div>
               {cameraConnected && (
                 <div className="absolute bottom-2 right-2 bg-black/70 px-2 py-1 rounded text-xs text-white font-mono">
