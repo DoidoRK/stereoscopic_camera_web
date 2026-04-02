@@ -1,9 +1,11 @@
-import { Camera, Gamepad2, Box, LucideIcon } from 'lucide-react';
+import { Camera, Gamepad2, Box, LucideIcon, Save, Sun, Moon } from 'lucide-react';
 import { ControlMode } from '../../types';
 
 interface SidebarProps {
   currentMode: ControlMode;
   onModeChange: (mode: ControlMode) => void;
+  isDark: boolean;
+  toggleTheme: () => void;
 }
 
 interface ModeButtonProps {
@@ -46,13 +48,19 @@ function ModeButton({ icon: Icon, label, description, isActive, onClick }: ModeB
   );
 }
 
-export function Sidebar({ currentMode, onModeChange }: SidebarProps) {
+export function Sidebar({ currentMode, onModeChange, isDark, toggleTheme }: SidebarProps) {
   const modes: Array<{ id: ControlMode; icon: LucideIcon; label: string; description: string }> = [
     {
       id: 'control',
       icon: Gamepad2,
       label: 'Rover Control',
       description: 'Control robot movement with live camera feed'
+    },
+    {
+      id: 'savePictures',
+      icon: Save,
+      label: 'Save Pictures Mode',
+      description: 'Calibrate stereoscopic camera alignment and parameters'
     },
     {
       id: 'calibration',
@@ -70,11 +78,43 @@ export function Sidebar({ currentMode, onModeChange }: SidebarProps) {
 
   return (
     <div className="w-80 bg-sidebar border-r border-sidebar-border p-4 flex flex-col">
-      <div className="mb-6">
-        <h2 className="text-lg font-bold mb-1 text-sidebar-foreground">Control Modes</h2>
-        <p className="text-sm text-muted-foreground">Select an operation mode</p>
+      
+      {/* HEADER */}
+      <div className="mb-6 flex items-center justify-between">
+        <div>
+          <h2 className="text-lg font-bold text-sidebar-foreground">Control Modes</h2>
+          <p className="text-xs text-muted-foreground">Select an operation mode</p>
+        </div>
+
+        {/* THEME TOGGLE */}
+        <button
+          onClick={toggleTheme}
+          className="relative w-9 h-9 flex items-center justify-center rounded-lg bg-muted hover:bg-accent transition-colors"
+          aria-label="Toggle theme"
+        >
+          {/* Sun */}
+          <Sun
+            className={`
+              absolute w-5 h-5 transition-all duration-300 ease-in-out
+              ${isDark 
+                ? 'rotate-90 scale-0 opacity-0' 
+                : 'rotate-0 scale-100 opacity-100'}
+            `}
+          />
+
+          {/* Moon */}
+          <Moon
+            className={`
+              absolute w-5 h-5 transition-all duration-300 ease-in-out
+              ${isDark 
+                ? 'rotate-0 scale-100 opacity-100' 
+                : '-rotate-90 scale-0 opacity-0'}
+            `}
+          />
+        </button>
       </div>
 
+      {/* MODES */}
       <div className="space-y-3 flex-1">
         {modes.map((mode) => (
           <ModeButton

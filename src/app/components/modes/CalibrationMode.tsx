@@ -23,7 +23,7 @@ export function CalibrationMode() {
         <div>
           <h2 className="text-2xl font-bold">Stereoscopic Camera Calibration</h2>
           <p className="text-muted-foreground text-sm mt-1">
-            Align and calibrate your stereo camera system
+            Align and calibrate the stereo camera system
           </p>
         </div>
         <button className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg transition-colors">
@@ -39,6 +39,8 @@ export function CalibrationMode() {
           CanvasRef={leftCanvasRef}
           cameraConnected={systemData.miscellaneousData.leftCameraConnected}
           cameraFPS={systemData.miscellaneousData.leftCameraFPS}
+          cameraTitle='Left Camera'
+          disconnectedMessage="Waiting for left camera to connect"
         />
 
         {/* Right Camera */}
@@ -46,6 +48,8 @@ export function CalibrationMode() {
           CanvasRef={rightCanvasRef}
           cameraConnected={systemData.miscellaneousData.rightCameraConnected}
           cameraFPS={systemData.miscellaneousData.rightCameraFPS}
+          cameraTitle='Right Camera'
+          disconnectedMessage="Waiting for right camera to connect"
         />
       </div>
 

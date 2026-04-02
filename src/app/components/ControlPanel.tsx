@@ -1,4 +1,4 @@
-import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight, Space, Camera } from 'lucide-react';
+import { ArrowUp, ArrowDown, ArrowLeft, ArrowRight } from 'lucide-react';
 
 interface ControlPanelProps {
   activeKeys: Set<string>;
@@ -20,7 +20,7 @@ export function ControlPanel({ activeKeys }: ControlPanelProps) {
           <Icon className={`w-6 h-6 ${isActive ? 'text-primary-foreground' : 'text-muted-foreground'}`} />
         </div>
         <div className="text-xs text-muted-foreground font-mono">
-          {keyName === " " ? "Stop" : keyName}
+          {keyName}
         </div>
       </div>
     );
@@ -29,14 +29,12 @@ export function ControlPanel({ activeKeys }: ControlPanelProps) {
 
   
   return (
-    <div className="bg-card rounded-lg p-6 border border-border">
+    <div className="bg-card rounded-lg p-2 border border-border">
       <h3 className="font-medium mb-4">Movement Controls</h3>
       
-      <div className="flex flex-col items-center gap-2 mb-6">
+      <div className="flex flex-col items-center">
         <div className="flex gap-2 justify-center">
-          <KeyButton keyName="Z" direction="takePicture" icon={Camera} />
           <KeyButton keyName="W" direction="forward" icon={ArrowUp} />
-          <KeyButton keyName=" " direction="stop" icon={Space} />
         </div>
         <div className="flex gap-2 justify-center">
           <KeyButton keyName="A" direction="left" icon={ArrowLeft} />

@@ -2,12 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 
 import { ControlPanel } from "../ControlPanel";
 import { StatusPanel } from "../StatusPanel";
-import { EncodersPanel } from "../EncodersPanel";
 import { AccelerometerPanel } from "../AccelerometerPanel";
 import { GyroscopePanel } from "../GyroscopePanel";
 import { CameraFeed } from "../ui/CameraFeed";
 
 import { useSystem } from "../../context/SystemProvider";
+import { VisualizationPanel } from "../VisualizationPanel";
 
 export function RoverControlMode() {
   const [activeKeys, setActiveKeys] = useState<Set<string>>(new Set());
@@ -19,7 +19,7 @@ export function RoverControlMode() {
   } = useSystem();
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     const key = e.key.toLowerCase();
-    if (["w", "a", "s", "d", " ", "z"].includes(key)) {
+    if (["w", "a", "s", "d"].includes(key)) {
       e.preventDefault();
       setActiveKeys(prev => {
         const newSet = new Set(prev);
@@ -32,7 +32,7 @@ export function RoverControlMode() {
 
   const handleKeyUp = useCallback((e: KeyboardEvent) => {
     const key = e.key.toLowerCase();
-    if (["w", "a", "s", "d", " ", "z"].includes(key)) {
+    if (["w", "a", "s", "d"].includes(key)) {
       e.preventDefault();
       setActiveKeys(prev => {
         const newSet = new Set(prev);
@@ -53,44 +53,48 @@ export function RoverControlMode() {
   }, [handleKeyDown, handleKeyUp]);
 
   return (
-    <div className="flex-1 p-6">
+    <div className="flex-1 p-2 space-y-4">
       {/* Stereo Camera Feed */}
-      <div className="bg-card rounded-lg p-6 border border-border mb-6">
-        <div className="grid grid-cols-2 gap-4">
-          {/* LEFT CAMERA */}
-          <CameraFeed
-            CanvasRef={leftCanvasRef}
-            cameraConnected={systemData.miscellaneousData.leftCameraConnected}
-            cameraFPS={systemData.miscellaneousData.leftCameraFPS}
-            cameraTitle="Left Camera"
-            disconnectedMessage="Waiting for left camera to connect"
-          />
-          {/* RIGHT CAMERA */}
-          <CameraFeed
-            CanvasRef={rightCanvasRef}
-            cameraConnected={systemData.miscellaneousData.rightCameraConnected}
-            cameraFPS={systemData.miscellaneousData.rightCameraFPS}
-            cameraTitle="Right Camera"
-            disconnectedMessage="Waiting for right camera to connect"
-          />
-        </div>
+      <div className="grid grid-cols-2 gap-4">
+        {/* LEFT CAMERA */}
+        <CameraFeed
+          CanvasRef={leftCanvasRef}
+          cameraConnected={systemData.miscellaneousData.leftCameraConnected}
+          cameraFPS={systemData.miscellaneousData.leftCameraFPS}
+          cameraTitle="Left Camera"
+          disconnectedMessage="Waiting for left camera to connect"
+        />
+        {/* RIGHT CAMERA */}
+        <CameraFeed
+          CanvasRef={rightCanvasRef}
+          cameraConnected={systemData.miscellaneousData.rightCameraConnected}
+          cameraFPS={systemData.miscellaneousData.rightCameraFPS}
+          cameraTitle="Right Camera"
+          disconnectedMessage="Waiting for right camera to connect"
+        />
       </div>
 
       {/* Controls & Status */}
-      <div className="grid grid-cols-5 gap-4">
-        <ControlPanel activeKeys={activeKeys} />
-        <StatusPanel
-          miscellaneousData={systemData.miscellaneousData}
-        />
-        <EncodersPanel
-          encodersData={systemData.encodersData}
-        />
-        <GyroscopePanel
-          gyroscopeData={systemData.gyroscopeData}
-        />
-        <AccelerometerPanel
-          accelerometerData={systemData.accelerometerData}
-        />
+      <div className="grid grid-cols-[1fr_1.2fr_1fr] gap-2">
+        <div className="grid grid-rows-2 gap-4">
+          <ControlPanel activeKeys={activeKeys} />
+          <GyroscopePanel
+            gyroscopeData={systemData.gyroscopeData}
+          />
+        </div>
+          <VisualizationPanel
+              leftCameraConnected={systemData.miscellaneousData.leftCameraConnected}
+              rightCameraConnected={systemData.miscellaneousData.rightCameraConnected}
+              encodersData={systemData.encodersData}
+            />
+        <div className="grid grid-rows-2 gap-4">         
+          <StatusPanel
+            miscellaneousData={systemData.miscellaneousData}
+          />
+          <AccelerometerPanel
+            accelerometerData={systemData.accelerometerData}
+          />
+        </div>
       </div>
     </div>
   );
