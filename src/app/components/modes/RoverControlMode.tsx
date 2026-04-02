@@ -19,7 +19,7 @@ export function RoverControlMode() {
   } = useSystem();
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     const key = e.key.toLowerCase();
-    if (["w", "a", "s", "d"].includes(key)) {
+    if (["w", "a", "s", "d", " ", "z"].includes(key)) {
       e.preventDefault();
       setActiveKeys(prev => {
         const newSet = new Set(prev);
@@ -32,7 +32,7 @@ export function RoverControlMode() {
 
   const handleKeyUp = useCallback((e: KeyboardEvent) => {
     const key = e.key.toLowerCase();
-    if (["w", "a", "s", "d"].includes(key)) {
+    if (["w", "a", "s", "d", " ", "z"].includes(key)) {
       e.preventDefault();
       setActiveKeys(prev => {
         const newSet = new Set(prev);
