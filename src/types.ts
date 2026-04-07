@@ -53,5 +53,5 @@ type SystemContextType = {
   sendCommand: (command: string, value?: any) => void
 }
 
-export type ControlMode = 'calibration' | 'control' | 'depth' | 'savePictures';
+export type ControlMode = 'calibration' | 'control' | 'depth';
 export type { MiscellaneousData, AccelerometerData, GyroscopeData, EncodersData, StereoCalibrationParams, SystemData, SystemContextType };

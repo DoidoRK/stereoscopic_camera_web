@@ -17,31 +17,57 @@ export function RoverControlMode() {
     rightCanvasRef,
     sendCommand
   } = useSystem();
+
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     const key = e.key.toLowerCase();
-    if (["w", "a", "s", "d"].includes(key)) {
+
+    if (["w", "a", "s", "d", "z"].includes(key)) {
       e.preventDefault();
-      setActiveKeys(prev => {
-        const newSet = new Set(prev);
-        newSet.add(key);
-        return newSet;
-      });
-      sendCommand("drive", { key, state: "press" });
+
+      if (e.repeat) return;
+
+      setActiveKeys(prev => new Set(prev).add(key));
+    }
+
+    if (key === "z") {
+      e.preventDefault();
+
+      // prevent holding spam
+      if (e.repeat) return;
+
+      sendCommand("saveImage", { key, state: "press" });
     }
   }, [sendCommand]);
 
   const handleKeyUp = useCallback((e: KeyboardEvent) => {
     const key = e.key.toLowerCase();
-    if (["w", "a", "s", "d"].includes(key)) {
+
+    if (["w", "a", "s", "d", "z"].includes(key)) {
       e.preventDefault();
+
       setActiveKeys(prev => {
         const newSet = new Set(prev);
         newSet.delete(key);
         return newSet;
       });
-      sendCommand("drive", { key, state: "release" });
     }
-  }, [sendCommand]);
+  }, []);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      activeKeys.forEach((key) => {
+        if (["w", "a", "s", "d"].includes(key)) {
+          sendCommand("drive", { key, state: "press" });
+        }
+      });
+
+      if (activeKeys.size === 0) {
+        sendCommand("drive", { key: "none", state: "stop" });
+      }
+    }, 300);
+
+    return () => clearInterval(interval);
+  }, [activeKeys, sendCommand]);
 
   useEffect(() => {
     window.addEventListener("keydown", handleKeyDown);
@@ -75,7 +101,7 @@ export function RoverControlMode() {
       </div>
 
       {/* Controls & Status */}
-      <div className="grid grid-cols-[1fr_1.2fr_1fr] gap-2">
+      <div className="grid grid-cols-[1fr_1.2fr_1fr] gap-4">
         <div className="grid grid-rows-2 gap-4">
           <ControlPanel activeKeys={activeKeys} />
           <GyroscopePanel

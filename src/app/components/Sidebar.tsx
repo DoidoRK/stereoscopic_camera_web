@@ -57,12 +57,6 @@ export function Sidebar({ currentMode, onModeChange, isDark, toggleTheme }: Side
       description: 'Control robot movement with live camera feed'
     },
     {
-      id: 'savePictures',
-      icon: Save,
-      label: 'Save Pictures Mode',
-      description: 'Calibrate stereoscopic camera alignment and parameters'
-    },
-    {
       id: 'calibration',
       icon: Camera,
       label: 'Calibration Mode',

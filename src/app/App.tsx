@@ -6,7 +6,6 @@ import { DepthPointCloudMode } from "./components/modes/DepthPointCloudMode";
 import { ConnectionStatus } from "./components/ConnectionStatus";
 
 import { SystemProvider, useSystem } from "./context/SystemProvider";
-import { SavePicturesMode } from "./components/modes/SavePicturesMode";
 
 function AppContent() {
   const {
@@ -37,8 +36,6 @@ function AppContent() {
     switch (currentMode) {
       case "control":
         return <RoverControlMode />;
-      case "savePictures":
-        return <SavePicturesMode />;
       case "calibration":
         return <CalibrationMode />;
       case "depth":
