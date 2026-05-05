@@ -5,7 +5,14 @@
 
   ## Running the code
 
-  Run `npm i` to install the dependencies.
+  Installing docker tools to run the project:
 
-  Run `npm run dev` to start the development server.
+  - sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+
+  Running Docker in dev mode (Hot Reload):
   
+  - docker compose up
+
+  Running Docker in prod mode:
+
+  - docker compose -f docker-compose.yml up --build
