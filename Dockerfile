@@ -1,5 +1,5 @@
-# -------- Base --------
-FROM node:20-alpine AS base
+FROM node:20-slim AS base
+
 WORKDIR /app
 
 COPY package.json package-lock.json ./
@@ -7,16 +7,16 @@ RUN npm ci
 
 COPY . .
 
-# -------- Dev --------
+# Dev
 FROM base AS dev
 EXPOSE 5173
 CMD ["npm", "run", "dev", "--", "--host"]
 
-# -------- Build --------
+# Build
 FROM base AS build
 RUN npm run build
 
-# -------- Prod --------
+# Prod
 FROM nginx:alpine AS prod
 RUN rm -rf /usr/share/nginx/html/*
 COPY --from=build /app/dist /usr/share/nginx/html
