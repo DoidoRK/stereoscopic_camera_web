@@ -1,44 +1,44 @@
 type MiscellaneousData = {
-    broadcasting: boolean;
-    calibrating: boolean;
-    rightCameraConnected: boolean;
-    leftCameraConnected: boolean;
-    rightCameraFPS: number;
-    leftCameraFPS: number;
-}
-
-type StereoCalibrationParams = {
-    Baseline: number;
-    focalLength: number;
-    alignmentError: number;
-    disparityRange: number;
+  cameraBroadcasting: boolean;
+  roverBroadcasting: boolean;
+  rightCameraConnected: boolean;
+  leftCameraConnected: boolean;
+  rightCameraFPS: number;
+  leftCameraFPS: number;
 }
 
 type AccelerometerData = {
-    accelerometerXReading: number;
-    accelerometerYReading: number;
-    accelerometerZReading: number;
+  accelerometerXReading: number;
+  accelerometerYReading: number;
+  accelerometerZReading: number;
 }
 
 type GyroscopeData = {
-    gyroscopeXReading: number;
-    gyroscopeYReading: number;
-    gyroscopeZReading: number;
+  gyroscopeXReading: number;
+  gyroscopeYReading: number;
+  gyroscopeZReading: number;
+}
+
+type EncoderReading = {
+  encoderDir: string;
+  encoderStep: number;
+  encoderTurns: number;
+  encoderUpdated: boolean;
 }
 
 type EncodersData = {
-    frontRightMotorEncoderReading: number;
-    frontLeftMotorEncoderReading: number;
-    rearRightMotorEncoderReading: number;
-    rearLeftMotorEncoderReading: number;
+  frontRightMotorEncoderReading: EncoderReading;
+  frontLeftMotorEncoderReading: EncoderReading;
+  rearRightMotorEncoderReading: EncoderReading;
+  rearLeftMotorEncoderReading: EncoderReading;
 }
 
 type SystemData = {
-    controlMode: number;
-    miscellaneousData: MiscellaneousData;
-    accelerometerData: AccelerometerData;
-    gyroscopeData: GyroscopeData;
-    encodersData: EncodersData;
+  controlMode: number;
+  miscellaneousData: MiscellaneousData;
+  accelerometerData: AccelerometerData;
+  gyroscopeData: GyroscopeData;
+  encodersData: EncodersData;
 }
 
 type SystemContextType = {
@@ -54,4 +54,4 @@ type SystemContextType = {
 }
 
 export type ControlMode = 'calibration' | 'control' | 'depth';
-export type { MiscellaneousData, AccelerometerData, GyroscopeData, EncodersData, StereoCalibrationParams, SystemData, SystemContextType };
+export type { MiscellaneousData, AccelerometerData, GyroscopeData, EncoderReading, EncodersData, SystemData, SystemContextType };

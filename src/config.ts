@@ -1,8 +1,21 @@
 const CAMERA_STREAM_PORT = 8765;
 const CONTROL_STREAM_PORT = 8766;
-const SERVER_ADDRESS = "raspberry.local"
 
-const videoStreamWebSocketAddress = `ws://${SERVER_ADDRESS}:${CAMERA_STREAM_PORT}`
-const controlStreamWebSocketAddress = `ws://${SERVER_ADDRESS}:${CONTROL_STREAM_PORT}`
+const hostname =
+  window.location.hostname;
 
-export { videoStreamWebSocketAddress, controlStreamWebSocketAddress };
+const protocol =
+  window.location.protocol === "https:"
+    ? "wss"
+    : "ws";
+
+const videoStreamWebSocketAddress =
+  `${protocol}://${hostname}:${CAMERA_STREAM_PORT}`;
+
+const controlStreamWebSocketAddress =
+  `${protocol}://${hostname}:${CONTROL_STREAM_PORT}`;
+
+export {
+  videoStreamWebSocketAddress,
+  controlStreamWebSocketAddress
+};

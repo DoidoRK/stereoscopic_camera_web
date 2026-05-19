@@ -3,6 +3,5 @@ services:
     build:
       context: .
       target: prod
-    ports:
-      - "8000:80"
+    network_mode: host
     restart: unless-stopped
