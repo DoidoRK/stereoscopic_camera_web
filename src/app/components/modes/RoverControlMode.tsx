@@ -64,7 +64,7 @@ export function RoverControlMode() {
       if (activeKeys.size === 0) {
         sendCommand("drive", { key: "none", state: "stop" });
       }
-    }, 300);
+    }, 100);
 
     return () => clearInterval(interval);
   }, [activeKeys, sendCommand]);
@@ -108,12 +108,12 @@ export function RoverControlMode() {
             gyroscopeData={systemData.gyroscopeData}
           />
         </div>
-          <VisualizationPanel
-              leftCameraConnected={systemData.miscellaneousData.leftCameraConnected}
-              rightCameraConnected={systemData.miscellaneousData.rightCameraConnected}
-              encodersData={systemData.encodersData}
-            />
-        <div className="grid grid-rows-2 gap-4">         
+        <VisualizationPanel
+          leftCameraConnected={systemData.miscellaneousData.leftCameraConnected}
+          rightCameraConnected={systemData.miscellaneousData.rightCameraConnected}
+          encodersData={systemData.encodersData}
+        />
+        <div className="grid grid-rows-2 gap-4">
           <StatusPanel
             miscellaneousData={systemData.miscellaneousData}
           />
