@@ -18,21 +18,21 @@ export function SystemProvider({ children }: { children: ReactNode }) {
       rightCameraFPS: 0,
       leftCameraFPS: 0
     },
-    encodersData:{
-      frontRightMotorEncoderReading:0,
-      frontLeftMotorEncoderReading:0,
-      rearRightMotorEncoderReading:0,
-      rearLeftMotorEncoderReading:0
+    encodersData: {
+      frontRightMotorEncoderReading: 0,
+      frontLeftMotorEncoderReading: 0,
+      rearRightMotorEncoderReading: 0,
+      rearLeftMotorEncoderReading: 0
     },
-    accelerometerData:{
-      accelerometerXReading:0,
-      accelerometerYReading:0,
-      accelerometerZReading:0
+    accelerometerData: {
+      accelerometerXReading: 0,
+      accelerometerYReading: 0,
+      accelerometerZReading: 0
     },
-    gyroscopeData:{
-      gyroscopeXReading:0,
-      gyroscopeYReading:0,
-      gyroscopeZReading:0
+    gyroscopeData: {
+      gyroscopeXReading: 0,
+      gyroscopeYReading: 0,
+      gyroscopeZReading: 0
     },
   };
 
